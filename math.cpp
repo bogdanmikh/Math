@@ -1,9 +1,11 @@
 #include "math.hpp"
 #include <string>
-#include <assert.h>
+#include <cassert>
 
+#define assertm(exp, msg) assert((msg, exp))
+#define ASSERT assertm(a.size() > 0 && b.size() > 0 && correct_data(a) && correct_data(b), "INCORRECT DATA");
 std::string Math::sum(std::string &a, std::string &b) {
-    assert(a.size() > 0 && b.size() > 0, "Incorrect data");
+    ASSERT;
     if (b.size() > a.size()) {
         std::string x = a;
         a = b;
@@ -45,8 +47,28 @@ std::string Math::sum(std::string &a, std::string &b) {
     for (int i = ans.size() - 1; i >= 0; i--) result.push_back(ans[i]);
     return result;
 }
-// std::string Math::difference(const std::string &a, const std::string &b);
+// std::string Math::difference(const std::string &a, const std::string &b) {
+//     if (b.size() > a.size()) {
+//         std::swap(a, b);
+//     } else if (a.size() == )
+// }
 // std::string Math::multiplication(const std::string &a, const std::string &b);
+
+// проверяет на коректность данных
+bool Math::correct_data (const std::string &a) {
+    std::string x = "-1234567890";
+    for (int i = 0; i < a.size(); i++) {
+        bool is_finded = false;
+        for (int j = 0; j < x.size(); j++) {
+            if (a[i] == x[j]) {
+                is_finded = true;
+                break;
+            }
+        }
+        if (!is_finded) return false;
+    }
+    return true;
+}
 
 inline uint64_t Math::trans_to_digit(const char &a) {
     return a - '0';
